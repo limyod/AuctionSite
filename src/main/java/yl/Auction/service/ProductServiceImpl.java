@@ -5,6 +5,7 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import yl.Auction.entity.Product;
+import yl.Auction.entity.User;
 import yl.Auction.model.ProductDTO;
 import yl.Auction.repository.ProductRepo;
 
@@ -37,6 +38,15 @@ public class ProductServiceImpl implements ProductService {
             productDTOs.add(studentDTO);
         }
         return productDTOs;
+    }
+
+    @Override
+    public void createProduct(ProductDTO productDTO, User user){
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        Product product = modelMapper.map(productDTO, Product.class);
+        product.setSeller(user);
+        productRepo.save(product);
     }
 
 

@@ -1,15 +1,14 @@
 package yl.Auction.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import yl.Auction.validation.ValidPassword;
+
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor(force = true)
@@ -37,4 +36,6 @@ public class User {
 
     private String zip;
 
+    @OneToMany(mappedBy = "seller")
+    private Set<Product> postedProducts;
 }

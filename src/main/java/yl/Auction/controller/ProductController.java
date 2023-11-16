@@ -4,12 +4,14 @@ import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import yl.Auction.model.Condition;
 import yl.Auction.model.ProductDTO;
+import yl.Auction.security.UserPrincipal;
 import yl.Auction.service.ProductService;
 
 import java.util.List;
@@ -53,15 +55,30 @@ public class ProductController {
     @PostMapping("/process-new-product")
     public String processingNewProduct(@Valid @ModelAttribute("product") ProductDTO productDTO,
                                        BindingResult bindingResult,
-                                       Model model){
+                                       Model model, @AuthenticationPrincipal UserPrincipal userPrincipal){
         //check binding
         //try saving
         if(bindingResult.hasErrors()){
             bindingResult.getAllErrors().forEach(error -> logger.error("Binding Error: {}", error));
             return "productForm";
         }
-        productService.saveProduct(productDTO);
+        productService.createProduct(productDTO, userPrincipal.getUser());
         return "redirect:/products";
 
     }
+//    @PostMapping("/process-new-product")
+//    public String processingNewProduct(@Valid @ModelAttribute("product") ProductDTO productDTO, @AuthenticationPrincipal UserPrincipal userPrincipal,
+//                                       BindingResult bindingResult,
+//                                       Model model){
+//        //check binding
+//        //try saving
+//        if(bindingResult.hasErrors()){
+//            bindingResult.getAllErrors().forEach(error -> logger.error("Binding Error: {}", error));
+//            return "productForm";
+//        }
+//        productService.createProduct(productDTO, userPrincipal.getUser());
+//        return "redirect:/products";
+//    }
+
+
 }

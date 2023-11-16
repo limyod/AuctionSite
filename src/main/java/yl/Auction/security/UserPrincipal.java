@@ -1,5 +1,6 @@
 package yl.Auction.security;
 
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +12,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class UserPrincipal implements UserDetails {
+    @Getter
     private User user;
     private List<Role> roles;
     public UserPrincipal(User user){

@@ -24,6 +24,11 @@ public class Product {
     private int auctionDuration;
     private BigDecimal startingPrice;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinTable(name="product_seller", joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private User seller;
+
     @PrePersist
     void startDate() {
         this.startDate = new Date();
