@@ -42,6 +42,21 @@ public class ProductController {
         return new ProductDTO();
     }
 
+    @GetMapping("/{productId}")
+    public String showProductDetails(@PathVariable Long productId, Model model) {
+        try {
+            ProductDTO productDTO = productService.getProductById(productId);
+            model.addAttribute("product", productDTO);
+            return "productDetails";
+        } catch (Exception exception) {
+            // Handle the case where the product with the given ID is not found
+            return "error"; // You can create a custom error page
+        }
+
+
+    }
+
+
     @GetMapping
     public String showAllProducts(Model model){
         List<ProductDTO> productDTOList = productService.getAllProducts();

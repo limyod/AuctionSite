@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import yl.Auction.Exception.ProductNotFoundException;
 import yl.Auction.entity.Product;
 import yl.Auction.entity.User;
 import yl.Auction.model.ProductDTO;
@@ -11,6 +12,7 @@ import yl.Auction.repository.ProductRepo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -49,7 +51,16 @@ public class ProductServiceImpl implements ProductService {
         productRepo.save(product);
     }
 
-
+    @Override
+    public ProductDTO getProductById(Long productId) throws ProductNotFoundException {
+        Optional<Product> optionalProduct = productRepo.findById(productId);
+        if(optionalProduct.isEmpty()){
+            throw new ProductNotFoundException("there is no product of that ID");
+        }
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        return modelMapper.map(optionalProduct.get(), ProductDTO.class);
+    }
 
 
 }
