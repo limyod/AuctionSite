@@ -10,7 +10,7 @@ import java.util.Date;
 
 @Data
 @Entity
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id

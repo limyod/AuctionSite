@@ -9,6 +9,11 @@
 <body>
 
 <div class="container">
+    <form th:action="@{/logout}" method="post">
+        <!-- CSRF Token for security -->
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <button type="submit" class="btn btn-secondary mt-3 ml-2">Log Out</button>
+    </form>
     <h2 class="mt-4 mb-4">Product List</h2>
 
     <div class="row">
