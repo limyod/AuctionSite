@@ -62,5 +62,13 @@ public class ProductServiceImpl implements ProductService {
         return modelMapper.map(optionalProduct.get(), ProductDTO.class);
     }
 
+    @Override
+    public void deleteProductById(Long productId) throws ProductNotFoundException {
+        if(!productRepo.existsById(productId)){
+            throw new ProductNotFoundException("the productid does not exist");
+        }
+        productRepo.deleteById(productId);
+    }
+
 
 }

@@ -12,4 +12,6 @@ public interface ProductService {
     void createProduct(ProductDTO productDTO, User user);
 
     ProductDTO getProductById(Long productId) throws ProductNotFoundException;
+
+    void deleteProductById(Long productId) throws ProductNotFoundException;
 }
