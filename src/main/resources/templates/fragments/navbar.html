@@ -9,13 +9,13 @@
     <div class="d-flex justify-content-between flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
         <h5 class="my-0 me-md-auto font-weight-normal">BidUp</h5>
         <nav class="my-2 my-md-0 mr-md-3">
-            <a class="p-2 text-dark" th:href="@{products}">Products</a>
-            <a class="p-2 text-dark" th:href="@{products/new}">Post</a>
-            <a class="p-2 text-dark" th:href="@{profile}">Profile</a>
+            <a class="p-2 text-dark" th:href="@{/products}">Products</a>
+            <a class="p-2 text-dark" th:href="@{/products/new}">Post</a>
+            <a class="p-2 text-dark" th:href="@{/profile}">Profile</a>
         </nav>
         <div sec:authorize="isAnonymous()">
-            <a class="btn btn-outline-primary" th:href="@{register}">Sign up</a>
-            <a class="btn btn-outline-primary" th:href="@{login}">log in</a>
+            <a class="btn btn-outline-primary" th:href="@{/register}">Sign up</a>
+            <a class="btn btn-outline-primary" th:href="@{/login}">log in</a>
         </div>
         <div sec:authorize="isAuthenticated()">
             <form th:action="@{/logout}" method="post">
