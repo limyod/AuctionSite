@@ -12,23 +12,24 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-6 offset-md-3">
-            <a th:href="@{/products}">&larr; Back to All Products</a>
+            <a class="btn btn-secondary mb-3" th:href="@{/products}">&larr; Back to All Products</a>
             <h2 class="mb-4" th:text="${product.name}"></h2>
-            <p th:text="${product.description}"></p>
-            <p><strong>Condition:</strong> <span th:text="${product.condition}"></span></p>
-            <p><strong>Start Date:</strong> <span th:text="${#dates.format(product.startDate, 'dd/MM/yyyy HH:mm')}"></span></p>
-            <p><strong>Auction Duration:</strong> <span th:text="${product.auctionDuration}"></span> days</p>
-            <p><strong>Starting Price:</strong> $<span th:text="${#numbers.formatDecimal(product.startingPrice, 0, 'COMMA', 2, 'POINT')}"></span></p>
+            <p class="lead" th:text="${product.description}"></p>
+            <p class="mb-2"><strong>Condition:</strong> <span th:text="${product.condition}"></span></p>
+            <p class="mb-2"><strong>Start Date:</strong> <span th:text="${#dates.format(product.startDate, 'dd/MM/yyyy HH:mm')}"></span></p>
+            <p class="mb-2"><strong>Auction Duration:</strong> <span th:text="${product.auctionDuration}"></span> days</p>
+            <p class="mb-2"><strong>Starting Price:</strong> $<span th:text="${#numbers.formatDecimal(product.startingPrice, 0, 'COMMA', 2, 'POINT')}"></span></p>
 
             <!-- Add your bid section here -->
             <h4 class="mt-4">Bids</h4>
-            <ul th:unless="${bids.isEmpty()}">
-                <li th:each="bid : ${bids}">
-                    <p><strong>Bid Amount:</strong> $<span th:text="${#numbers.formatDecimal(bid.amount, 0, 'COMMA', 2, 'POINT')}"></span></p>
-                    <p><strong>Bidder:</strong> <span th:text="${bid.bidderDisplayName}"></span></p>
-                    <p><strong>Bid Time:</strong> <span th:text="${#dates.format(bid.date, 'dd/MM/yyyy HH:mm')}"></span></p>
+            <ul class="list-group" th:unless="${bids.isEmpty()}">
+                <li class="list-group-item" th:each="bid : ${bids}">
+                    <p class="mb-1"><strong>Bid Amount:</strong> $<span th:text="${#numbers.formatDecimal(bid.amount, 0, 'COMMA', 2, 'POINT')}"></span></p>
+                    <p class="mb-1"><strong>Bidder:</strong> <span th:text="${bid.bidderDisplayName}"></span></p>
+                    <p class="mb-1"><strong>Bid Time:</strong> <span th:text="${#dates.format(bid.date, 'dd/MM/yyyy HH:mm')}"></span></p>
                 </li>
             </ul>
+
             <p th:if="${bids.isEmpty()}">No bids yet.</p>
 
             <div sec:authorize="isAnonymous()">

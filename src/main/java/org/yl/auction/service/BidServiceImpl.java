@@ -16,6 +16,7 @@ import org.yl.auction.entity.User;
 import org.yl.auction.model.BidDTO;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -59,21 +60,19 @@ public class BidServiceImpl implements BidService{
 
     @Override
     public List<BidDTO> findAllBidsByUserId(Long userId) {
-        ModelMapper modelMapper = new ModelMapper();
-        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+
         return bidRepo.findAllBidsByBidderId(userId)
                 .stream()
-                .map(bid -> modelMapper.map(bid, BidDTO.class))
+                .map(this::convertToBidDTO)
                 .toList();
+
     }
 
     @Override
     public List<BidDTO> findAllBidsByProductId(Long productId) {
-        ModelMapper modelMapper = new ModelMapper();
-        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         return bidRepo.findAllBidsByProductId(productId)
                 .stream()
-                .map(bid -> modelMapper.map(bid, BidDTO.class))
+                .map(this::convertToBidDTO)
                 .toList();
     }
 
@@ -81,5 +80,15 @@ public class BidServiceImpl implements BidService{
     public Optional<BidDTO> findMostRecentBid(List<BidDTO> bidDTOs) {
         return bidDTOs.stream()
                 .max(Comparator.comparing(BidDTO::getDate));
+    }
+
+    private BidDTO convertToBidDTO(Bid bid){
+        BidDTO bidDTO = new BidDTO();
+        bidDTO.setId(bid.getId());
+        bidDTO.setAmount(bid.getAmount());
+        bidDTO.setDate(bid.getDate());
+        bidDTO.setBidderDisplayName(bid.getBidder().getDisplayName());
+        bidDTO.setProductName(bid.getProduct().getName());
+        return bidDTO;
     }
 }

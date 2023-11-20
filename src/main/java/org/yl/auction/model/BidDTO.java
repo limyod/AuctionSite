@@ -7,11 +7,10 @@ import java.util.Date;
 
 @Data
 public class BidDTO {
-        private Long id;
+        private long id;
         private BigDecimal amount;
-        private Long productId;
-        private Long userId;
         private Date date;
-        private String bidderDisplayName;
-        private String productName;
+        private String bidderDisplayName; // Assuming you want to display the username of the bidder
+        private String productName; // Assuming you want to display the name of the product
+        // Constructors, getters, and setters can be added as needed
 }

@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.yl.auction.entity.Product;
+import org.yl.auction.model.BidPlacementDTO;
 import org.yl.auction.model.Condition;
 import org.yl.auction.model.ProductDTO;
 import org.yl.auction.security.UserPrincipal;
@@ -56,7 +57,7 @@ public class ProductController {
             model.addAttribute("product", productDTO);
             List<BidDTO> bids = bidService.findAllBidsByProductId(productId);
             model.addAttribute("bids", bids);
-            model.addAttribute("newBid", new BidDTO());
+            model.addAttribute("newBid", new BidPlacementDTO());
             return "productDetails";
         } catch (Exception exception) {
             logger.error("Error while fetching product details for productId: {}", productId, exception);
@@ -90,7 +91,7 @@ public class ProductController {
 
     }
     @PostMapping("/placeBid")
-    public String placeBid(Model model, BidDTO newBid, ProductDTO product, BindingResult bindingResult, HttpServletRequest request, @AuthenticationPrincipal UserPrincipal userPrincipal){
+    public String placeBid(Model model, BidPlacementDTO newBid, ProductDTO product, BindingResult bindingResult, HttpServletRequest request, @AuthenticationPrincipal UserPrincipal userPrincipal){
         String referer = request.getHeader("Referer");
         if(bindingResult.hasErrors()){
             bindingResult.getAllErrors().forEach(error -> logger.error("Binding Error: {}", error));
