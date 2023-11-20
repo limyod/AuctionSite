@@ -16,9 +16,13 @@
             <h2 class="mb-4" th:text="${product.name}"></h2>
             <p class="lead" th:text="${product.description}"></p>
             <p class="mb-2"><strong>Condition:</strong> <span th:text="${product.condition}"></span></p>
-            <p class="mb-2"><strong>Start Date:</strong> <span th:text="${#dates.format(product.startDate, 'dd/MM/yyyy HH:mm')}"></span></p>
-            <p class="mb-2"><strong>Auction Duration:</strong> <span th:text="${product.auctionDuration}"></span> days</p>
+            <p class="mb-2"><strong>Start Date:</strong> <span th:text="${#dates.format(product.startDate, 'MM/dd/yyyy HH:mm')}"></span></p>
+            <p class="mb-2"><strong>End Date:</strong> <span th:text="${#dates.format(product.endDate, 'MM/dd/yyyy HH:mm')}"></span></p>
             <p class="mb-2"><strong>Starting Price:</strong> $<span th:text="${#numbers.formatDecimal(product.startingPrice, 0, 'COMMA', 2, 'POINT')}"></span></p>
+            <p class="mb-2" th:if="${product.currentPrice != null}"><strong>Current Price:</strong> $<span th:text="${#numbers.formatDecimal(product.currentPrice, 0, 'COMMA', 2, 'POINT')}"></span></p>
+            <p class="mb-2" th:if="${product.currentPrice == null}"><strong>Current Price:</strong><span>There are no bids yet.</span></p>
+            <p class="mb-2"><strong>Posted By:</strong> <span th:text="${product.sellerName}"></span></p>
+
 
             <!-- Add your bid section here -->
             <h4 class="mt-4">Bids</h4>

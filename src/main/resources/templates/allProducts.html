@@ -21,8 +21,9 @@
                         <h5 class="card-title" th:text="${product.name}"></h5>
                     </a>
                     <p class="card-text" th:text="${product.condition}"></p>
-                    <p class="card-text" th:text="'Auction Duration: ' + ${product.auctionDuration}"></p>
+                    <p class="card-text" th:text="'Auction ends at: ' + ${product.endDate}"></p>
                     <p class="card-text" th:text="'Starting Price: ' + ${product.startingPrice}"></p>
+                    <p class="card-text" th:text="'Current Price: ' + ${product.currentPrice}"></p>
                 </div>
             </div>
         </div>

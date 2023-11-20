@@ -11,12 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.yl.auction.entity.Product;
-import org.yl.auction.model.BidPlacementDTO;
-import org.yl.auction.model.Condition;
-import org.yl.auction.model.ProductDTO;
+import org.yl.auction.model.*;
 import org.yl.auction.security.UserPrincipal;
 import org.yl.auction.entity.User;
-import org.yl.auction.model.BidDTO;
 import org.yl.auction.service.BidService;
 import org.yl.auction.service.ProductService;
 
@@ -35,20 +32,11 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @ModelAttribute(name="product")
-    public ProductDTO product(){
-        return new ProductDTO();
-    }
-
     @ModelAttribute("conditions")
     public Condition[] getConditions(){
         return Condition.values();
     }
 
-    @ModelAttribute("product")
-    public ProductDTO getProduct(){
-        return new ProductDTO();
-    }
 
     @GetMapping("/{productId}")
     public String showProductDetails(@PathVariable Long productId, Model model) {
@@ -74,10 +62,11 @@ public class ProductController {
     }
     @GetMapping("/new")
     public String showProductForm(Model model){
+        model.addAttribute("productForm", new ProductFormDTO());
         return "productForm";
     }
     @PostMapping("/processNewProduct")
-    public String processingNewProduct(@Valid @ModelAttribute("product") ProductDTO productDTO,
+    public String processingNewProduct(@Valid @ModelAttribute("productForm") ProductFormDTO productForm,
                                        BindingResult bindingResult,
                                        Model model, @AuthenticationPrincipal UserPrincipal userPrincipal){
         //check binding
@@ -86,7 +75,10 @@ public class ProductController {
             bindingResult.getAllErrors().forEach(error -> logger.error("Binding Error: {}", error));
             return "productForm";
         }
-        productService.createProduct(productDTO, userPrincipal.getUser());
+        productService.createProduct(productForm.getName(),
+                productForm.getCondition(), productForm.getDescription(),
+                productForm.getAuctionDuration(), productForm.getStartingPrice(),
+                userPrincipal.getUser());
         return "redirect:/products";
 
     }

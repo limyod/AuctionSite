@@ -13,7 +13,7 @@
 <div class="container mt-5">
     <h2>New Product Form</h2>
 
-    <form method="POST" th:action="@{processNewProduct}" th:object="${product}">
+    <form method="POST" th:action="@{processNewProduct}" th:object="${productForm}">
         <div class="form-group">
             <label for="name">Name:</label>
             <input id="name" type="text" class="form-control" name="name" th:field="*{name}"/>

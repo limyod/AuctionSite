@@ -85,6 +85,7 @@ public class BidServiceImpl implements BidService{
     private BidDTO convertToBidDTO(Bid bid){
         BidDTO bidDTO = new BidDTO();
         bidDTO.setId(bid.getId());
+        bidDTO.setProductId(bid.getProduct().getId());
         bidDTO.setAmount(bid.getAmount());
         bidDTO.setDate(bid.getDate());
         bidDTO.setBidderDisplayName(bid.getBidder().getDisplayName());
